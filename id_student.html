@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<students-details>
+<student>
+<studentid>561</studentid>
+<name>Ramu</name>
+<address>ECIL</address>
+<gender>Male</gender>
+</student>
+<student>
+<studentid>562</studentid>
+<name>Ramya</name>
+<address>KBHP</address>
+<gender>Female</gender>
+</student>
+<student>
+<studentid>563</studentid>
+<name>Mahi</name>
+<address>BHEL</address>
+<gender>Male</gender>
+</student>
+<student>
+<studentid>564</studentid>
+<name>Manvi</name>
+<address>KOTI</address>
+<gender>Female</gender>
+</student>
+<student>
+<studentid>565</studentid>
+<name>Ammu</name>
+<address>ECIL</address>
+<gender>Female</gender>
+</student>
+</students-details>
+
+<!-- html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Document</title>
+<style>
+#btn1{
+background-color: green;
+display: block;
+margin: auto;
+color:white;
+}
+#name1{
+width: 300px;
+border-radius: 10px;
+display: block;
+margin: auto;
+}
+#box{
+display:block;
+margin: auto;
+height:300px;
+width:300px;
+/* background-color: aquamarine; */
+border-radius: 4px;
+margin-top:20px;
+}
+</style>
+</head>
+<body>
+<div id="name">
+<input type="text" placeholder="Enter student name" id="name1">
+</div>
+<div id="btn">
+<button id="btn1">submit</button>
+</div>
+<div id="box">
+<div id="name2"></div>
+<div id="id"></div>
+<div id="addr"></div>
+<div id="gen"></div>
+</div>
+<script>
+let xmlContent = '';
+// let tableBooks = document.getElementById('books');
+let name =document.getElementById('name1');
+let box = document.getElementById('box');
+let btn = document.getElementById('btn1');
+btn.addEventListener("click", ()=>{
+fetch('student.xml').then((response) => {
+response.text().then((xml) => {
+xmlContent = xml;
+let parser = new DOMParser();
+let xmlDOM = parser.parseFromString(xmlContent,
+'application/xml')
+let students = xmlDOM.querySelectorAll('student');
+// console.log(students.children[0].innerHTML);
+students.forEach(student =>{
+if(student.children[1].innerHTML == name.value){
+document.getElementById('name2').innerHTML = "Name: "+ student.children[1].innerHTML;
+document.getElementById('id').innerHTML = "StudentID : " + student.children[0].innerHTML;
+document.getElementById('addr').innerHTML =
+"Address : " + student.children[2].innerHTML;
+document.getElementById('gen').innerHTML = "Gender: " + student.children[3].innerHTML;
+}
+})
+})
+}
+)
+})
+</script>
+</body>
+</html>
